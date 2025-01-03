@@ -1,0 +1,65 @@
+
+.option-page {
+    text-align: center;
+    padding: 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-image: linear-gradient(to right,rgb(229, 231, 206),rgb(206, 187, 249)) ;
+    margin:10rem !important;
+    margin-bottom:7rem !important;
+    border-radius: 5px;
+  }
+  
+  h1 {
+    color: black;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .card {
+    background-color: rgb(246, 246, 239);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    padding: 20px;
+    text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card h2 {
+    color: black;
+    margin-bottom: 10px;
+  }
+  
+  .card p {
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  button {
+    background-image: linear-gradient(to right,rgb(229, 231, 206),rgb(206, 187, 249)) ;
+    color: black;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    width: 100%;
+  }
+  
+  button:hover {
+    background-image: linear-gradient(to right,rgb(229, 231, 206),rgb(206, 187, 249)) ;
+  }
+  

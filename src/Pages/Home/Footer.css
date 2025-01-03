@@ -1,0 +1,58 @@
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    background-image: linear-gradient(to right, rgb(229, 231, 206), rgb(206, 187, 249));
+    color: black;
+    padding: 20px 10px;
+    width: 100%; /* Ensure full page width */
+    position: relative; /* Ensure it stays in flow of the page */
+    box-sizing: border-box; /* Include padding in width calculation */
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+  
+  .footer-section {
+    flex: 1;
+    padding: 10px;
+  }
+  
+  .footer-section h3, .footer-section h4 {
+    margin-bottom: 10px;
+  }
+  
+  .social-icons a {
+    color: black;
+    margin-right: 10px;
+    font-size: 20px;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .social-icons a:hover {
+    color: black;
+  }
+  
+  .footer-section ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .footer-section li {
+    margin-bottom: 5px;
+  }
+  
+  .footer-section p {
+    margin: 5px 0;
+  }
+  
+  .email-link {
+    text-decoration: none;
+    color: black;
+  }
+  
+  .email-link:hover {
+    text-decoration: underline;
+    color: black;
+  }
+  

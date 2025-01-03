@@ -1,0 +1,133 @@
+/* General Styles */
+body {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    /* margin-top: 8rem !important; */
+    padding: 0;
+    background-color: rgb(246, 246, 239);
+  }
+  
+  .about-container {
+    max-width: 1200px;
+    margin: 8rem;
+    padding: 20px;
+  }
+  
+  /* Hero Section */
+  .about-hero {
+    background: linear-gradient(to right,rgb(229, 231, 206),rgb(206, 187, 249)) ;
+    color: black;
+    text-align: center;
+    padding: 50px 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  
+  .about-title {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0 0 10px;
+  }
+  
+  .about-subtitle {
+    font-size: 18px;
+    margin: 0;
+  }
+  
+  /* Content Sections */
+  .about-content {
+    background: linear-gradient(to right,rgb(229, 231, 206),rgb(206, 187, 249)) ;
+    /* color:black; */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: black;
+  }
+  
+  .section-description {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #555;
+  }
+  
+  /* How It Works Section */
+  .steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  
+  .step {
+    flex: 1 1 30%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .step h3 {
+    font-size: 18px;
+    color: black;
+    margin-bottom: 10px;
+  }
+  
+  .step p {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* Call to Action */
+  .call-to-action {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  .call-to-action h2 {
+    font-size: 24px;
+    color: black;
+    margin-bottom: 10px;
+  }
+  
+  .call-to-action p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  .cta-button {
+    background: linear-gradient(45deg, #2196f3, #21cbf3);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #1e88e5, #1ecceb);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .steps {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .step {
+      flex: 1 1 100%;
+    }
+  }
+  

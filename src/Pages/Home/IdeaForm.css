@@ -1,0 +1,90 @@
+/* Container Styling */
+body {
+  background-color: rgb(246, 246, 239);
+  margin: 0;
+  padding: 0;
+}
+
+.idea-form-container {
+  background-image: linear-gradient(to right, rgb(229, 231, 206), rgb(206, 187, 249));
+  max-width: 700px;
+  margin-top:8rem !important;
+  margin: 2rem auto; /* Centers the container and adjusts margin */
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: #333;
+  box-sizing: border-box; /* Ensures padding doesn't add extra width */
+}
+
+/* Form Header */
+.idea-form-container h1 {
+  text-align: center;
+  color: black;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  animation: zoomIn 1s ease-in-out;
+}
+
+/* Form Styling */
+.idea-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.idea-form label {
+  font-weight: bold;
+  font-size: 1rem;
+  color: black;
+}
+
+.idea-form input,
+.idea-form textarea,
+.idea-form select {
+  width: 100%; /* Ensures all fields are equally wide */
+  padding: 0.8rem;
+  margin: 0; /* Removes extra margin */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  background-color: rgb(246, 246, 239); /* Consistent background color */
+}
+
+.idea-form input:focus,
+.idea-form textarea:focus,
+.idea-form select:focus {
+  border-color: black;
+  outline: none;
+}
+
+/* Button Styling */
+.btn {
+  text-align: center;
+}
+
+.idea-form button {
+  padding: 0.8rem;
+  background-image: linear-gradient(to right, rgb(229, 231, 206), rgb(206, 187, 249));
+  color: black;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 250px;
+  align-self: center; /* Centers the button */
+  border: 2px solid black;
+}
+
+.idea-form button:hover {
+  background-color: black;
+  color: white;
+  transform: translateY(-3px);
+}
+
+.idea-form button:active {
+  transform: translateY(0);
+}

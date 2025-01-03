@@ -1,0 +1,74 @@
+.profile-container {
+  width: 50%;
+  max-width: 600px; /* Ensure it doesn't stretch too wide */
+  margin: 20px auto; /* Add some vertical margin for centering */
+  text-align: center;
+  background-image: linear-gradient(to right, rgb(229, 231, 206), rgb(206, 187, 249));
+  padding: 20px; /* Add padding to ensure inputs don't touch the edges */
+  border-radius: 10px; /* Smooth corners for a modern look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add subtle shadow for depth */
+}
+
+.profile-toggle {
+  margin-bottom: 20px;
+  display: flex; /* Use flexbox for alignment */
+  justify-content: center; /* Center buttons horizontally */
+  gap: 15px; /* Add spacing between buttons */
+}
+
+.profile-toggle button {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 1px solid black; /* Border for inactive buttons */
+  border-radius: 5px;
+  background-color: transparent; /* Default inactive button background */
+  color: black;
+  transition: all 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.profile-toggle .active {
+  /* background-color: #007bff; */
+  color: black;
+}
+
+.profile-toggle button:hover {
+  /* background-color: #007bff; */
+  color: black;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Align items to the center */
+  gap: 15px; /* Space between fields */
+}
+
+.profile-form label {
+  width: 100%;
+  text-align: left; /* Align label text to the left */
+  font-weight: bold; /* Highlight labels */
+}
+
+.profile-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc; /* Subtle border for input fields */
+  border-radius: 5px; /* Smooth corners */
+  box-sizing: border-box; /* Prevent input from overflowing */
+}
+
+.submit-btn {
+  padding: 10px 20px;
+  /* background-color: #007bff; */
+  color: black;
+  border: 2px solid black;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 20px; /* Add space above the button */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+  width:50%;
+}
+
+/* .submit-btn:hover {
+  background-color: #0056b3; 
+} */
