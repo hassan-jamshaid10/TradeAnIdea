@@ -23,6 +23,7 @@ import ProtectedRoute from './ProtectedRoute'; // Import the ProtectedRoute comp
 import './App.css';
 import ResetPasswordForm from './components/AuthenticationForms/ForgotPasswordForm/ResetPassword';
 import ResetPassword from './Pages/Authentication/ResetPassword';
+import OTPPage from './Pages/Authentication/OTPPage';
 
 function App() {
   return (
@@ -34,7 +35,7 @@ function App() {
           <Route path="/forgot" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword/>} />
             <Route path="/login" element={<Login />} />
-            <Route path="/validate-otp" element={<ProtectedRoute><OTPValidation /></ProtectedRoute>} />
+            <Route path="/validate-otp" element={<ProtectedRoute><OTPPage/></ProtectedRoute>} />
             <Route path="/signUp" element={<SignUp />} />
 
             

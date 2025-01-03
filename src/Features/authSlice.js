@@ -122,7 +122,7 @@ const authSlice = createSlice({
         });
         builder.addCase(login.fulfilled, (state, action) => {
             state.status = 'succeeded';
-            state.token = action.payload.token; // Store token after login
+            state.token = action.payload.token; // Store token after login 
             state.isAuthenticated = true;
             state.error = null;
         });

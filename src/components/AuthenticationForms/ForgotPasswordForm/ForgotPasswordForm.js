@@ -7,7 +7,7 @@ import "./ForgotPasswordForm.css";
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState(""); // For success message
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -18,6 +18,7 @@ const ForgotPasswordForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate email input
     if (!email) {
       setErrorMessage("Please enter your email address.");
       return;
@@ -27,14 +28,19 @@ const ForgotPasswordForm = () => {
       // Dispatch forgotPassword action with email
       const response = await dispatch(forgotPassword(email));
 
-      // Check if response has the success message
+      // Check if response contains success message
       if (response?.message) {
-        setSuccessMessage(response.message);
-        setErrorMessage(""); // Clear error if any
+        setSuccessMessage(response.message); // Show success message
+        setErrorMessage(""); // Clear error message
+
+        // Redirect to login page immediately after success
+        navigate("/login");
       }
     } catch (error) {
-      setSuccessMessage(""); // Clear success message if any
+      // Handle error case
+      setSuccessMessage(""); // Clear success message if error occurs
       setErrorMessage("An error occurred while requesting the password reset.");
+      console.error("Error during forgot password request:", error);
     }
   };
 
@@ -54,9 +60,13 @@ const ForgotPasswordForm = () => {
           />
         </div>
 
+        {/* Display error message */}
         {errorMessage && <p className="error-message">{errorMessage}</p>}
+        
+        {/* Display success message */}
         {successMessage && <p className="success-message">{successMessage}</p>}
 
+        {/* Submit Button */}
         <button type="submit" className="reset-password-button">
           Send Reset Link
         </button>
