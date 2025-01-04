@@ -14,6 +14,7 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -32,7 +33,12 @@ const LoginForm = () => {
       setErrorMessage("E-mail and password both should be filled!");
       return;
     }
-  
+    if (!passwordRegex.test(password)) {
+            setErrorMessage(
+              "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character"
+            );
+            return;
+          }
 
     try {
       // Dispatch the login action and handle async login
