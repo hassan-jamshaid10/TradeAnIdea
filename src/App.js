@@ -15,13 +15,10 @@ import Option from "./Pages/Home/Option";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Footer from "./Pages/Home/Footer";
 import Profile from "./Pages/Home/Profile";
-import OTPValidation from './components/AuthenticationForms/LoginForm/Otp';
 
-import { useSelector } from "react-redux";
 import ProtectedRoute from './ProtectedRoute'; // Import the ProtectedRoute component
 
 import './App.css';
-import ResetPasswordForm from './components/AuthenticationForms/ForgotPasswordForm/ResetPassword';
 import ResetPassword from './Pages/Authentication/ResetPassword';
 import OTPPage from './Pages/Authentication/OTPPage';
 
@@ -29,7 +26,7 @@ function App() {
   return (
     <>
       <Router>
-        {/* <Header /> */}
+        <Header />
         <main>
           <Routes>
           <Route path="/forgot" element={<ForgotPassword />} />
@@ -50,7 +47,7 @@ function App() {
             <Route path="/option" element={<ProtectedRoute><Option /></ProtectedRoute>} />
           </Routes>
         </main>
-        {/* <Footer /> */}
+        <Footer />
       </Router>
     </>
   );

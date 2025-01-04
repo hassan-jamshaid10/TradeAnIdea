@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {useParams} from 'react-router-dom';
-import {  useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchIdeaDetails, addCommentToIdea } from '../../Features/IdeaDetailsSlice'; // Import actions
 import './Detail.css';
 
@@ -9,6 +9,7 @@ const Detail = () => {
   const dispatch = useDispatch();
   const { idea, comments, loading, error } = useSelector((state) => state.ideaDetails);
   const [commentInput, setCommentInput] = useState('');
+  const [showPopup, setShowPopup] = useState(false); // State to manage popup visibility
 
   useEffect(() => {
     dispatch(fetchIdeaDetails(id)); // Fetch idea details when the component mounts
@@ -18,6 +19,12 @@ const Detail = () => {
     if (commentInput.trim()) {
       dispatch(addCommentToIdea({ ideaId: id, commentText: commentInput }));
       setCommentInput(''); // Clear the input after submitting
+      setShowPopup(true); // Show the popup when a comment is added
+
+      // Hide the popup after 3 seconds
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 3000);
     }
   };
 
@@ -30,6 +37,24 @@ const Detail = () => {
         <>
           <h1 className="idea-name">{idea.idea_name}</h1>
           <p className="idea-description">{idea.description}</p>
+
+          {/* Display Betterment, Category, and SDG */}
+          {idea.betterment && (
+            <p>
+              <strong>Betterment: </strong>{idea.betterment}
+            </p>
+          )}
+          {idea.category && (
+            <p>
+              <strong>Category: </strong>{idea.category}
+            </p>
+          )}
+          {idea.sdg && (
+            <p>
+              <strong>SDG: </strong>{idea.sdg}
+            </p>
+          )}
+
           <h4>Presented by:</h4>
           <h5>{idea.userName}</h5>
           <p>{idea.userEmail}</p>
@@ -37,15 +62,8 @@ const Detail = () => {
           <hr />
 
           <div className="comment-section">
-            <h2>Comments</h2>
-            <ul className="comment-list">
-              {comments?.map((comment) => (
-                <li key={comment.commentId} className="comment-item">
-                  {comment.text}
-                </li>
-              ))}
-            </ul>
 
+            {/* Add new comment */}
             <textarea
               className="comment-box"
               value={commentInput}
@@ -56,6 +74,13 @@ const Detail = () => {
               Add Comment
             </button>
           </div>
+
+          {/* Popup Notification */}
+          {showPopup && (
+            <div className="popup">
+              <p>New comment added successfully!</p>
+            </div>
+          )}
         </>
       )}
     </div>

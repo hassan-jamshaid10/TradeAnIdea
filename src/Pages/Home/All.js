@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { fetchIdeas } from "../../Features/GetIdeasSlice"; // Import fetchIdeas action
-import "./All.css"
+import "./All.css";
+
 const truncateDescription = (text, limit) => {
   return text.length > limit ? `${text.substring(0, limit)}...` : text;
 };
@@ -15,8 +16,6 @@ const All = () => {
   // Get token and authentication status from Redux store
   const { token, isAuthenticated } = useSelector((state) => state.auth); 
   const { ideas, loading, error } = useSelector((state) => state.ideas);
-
-  console.log(token, isAuthenticated); // Check values of token and isAuthenticated
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -69,7 +68,7 @@ const All = () => {
           {loading ? (
             <p>Loading...</p>
           ) : renderError ? (
-            <p>Error: {renderError}</p>  
+            <p>Error: {renderError}</p>
           ) : filteredIdeas.length > 0 ? (
             filteredIdeas.map((idea) => (
               <div key={idea.ideaId} className="idea-card">
@@ -77,6 +76,24 @@ const All = () => {
                 <p className="idea-description">
                   {truncateDescription(idea.description, 100)}
                 </p>
+
+                {/* Display Betterment, Category, and SDG */}
+                {idea.betterment && (
+                  <p>
+                    <strong>Betterment: </strong>{idea.betterment}
+                  </p>
+                )}
+                {idea.category && (
+                  <p>
+                    <strong>Category: </strong>{idea.category}
+                  </p>
+                )}
+                {idea.sdg && (
+                  <p>
+                    <strong>SDG: </strong>{idea.sdg}
+                  </p>
+                )}
+
                 <p>
                   <strong>Presented By: </strong>{idea.user.name}
                 </p>
