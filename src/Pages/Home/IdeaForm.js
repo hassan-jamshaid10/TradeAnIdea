@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { submitIdea, resetFormState } from "../../Features/ideaFormSlice";
 import "./IdeaForm.css";
-import { useNavigate } from "react-router-dom";
 
 const sdgList = [
   "No Poverty",
@@ -27,28 +28,36 @@ const IdeaForm = () => {
   const [betterment, setBetterment] = useState("");
   const [description, setDescription] = useState("");
   const [sdg, setSdg] = useState("");
-  const [presenter, setPresenter] = useState("");
-  const [pemail, setPemail] = useState("");
-  const [category, setCategory] = useState(""); // New state for category
+  const [category, setCategory] = useState("");
 
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, success, error } = useSelector((state) => state.ideaForm);
+  const token = useSelector((state) => state.auth.token); // Fetch the token from the auth slice
+
+  useEffect(() => {
+    if (success) {
+      alert("Idea submitted successfully!");
+      dispatch(resetFormState());
+      setIdea("");
+      setBetterment("");
+      setDescription("");
+      setSdg("");
+      setCategory("");
+    }
+  }, [success, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!idea || !betterment || !description || !sdg || !presenter || !category) {
+
+    if (!idea || !betterment || !description || !sdg || !category) {
       alert("All fields are required.");
       return;
     }
-    // alert("Idea submitted successfully!");
-    // Clear the form after submission
-    setIdea("");
-    setBetterment("");
-    setDescription("");
-    setSdg("");
-    setPresenter("");
-    setPemail("");
-    setCategory(""); // Clear category field
-    navigate("/option");
+
+    const ideaData = { idea_name: idea, description, betterment, category, sdg };
+
+    // Pass token with the action
+    dispatch(submitIdea({ ideaData, token }));
   };
 
   return (
@@ -58,7 +67,6 @@ const IdeaForm = () => {
         <label>
           Idea Name:
           <input
-            className="input"
             type="text"
             value={idea}
             onChange={(e) => setIdea(e.target.value)}
@@ -69,7 +77,6 @@ const IdeaForm = () => {
         <label>
           Idea Betterment:
           <input
-            className="input"
             type="text"
             value={betterment}
             onChange={(e) => setBetterment(e.target.value)}
@@ -80,7 +87,6 @@ const IdeaForm = () => {
         <label>
           Description:
           <textarea
-            className="input"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Describe your idea in detail"
@@ -90,12 +96,7 @@ const IdeaForm = () => {
         </label>
         <label>
           Select SDG:
-          <select
-            className="input"
-            value={sdg}
-            onChange={(e) => setSdg(e.target.value)}
-            required
-          >
+          <select value={sdg} onChange={(e) => setSdg(e.target.value)} required>
             <option value="" disabled>
               Choose an SDG
             </option>
@@ -109,7 +110,6 @@ const IdeaForm = () => {
         <label>
           Category:
           <input
-            className="input"
             type="text"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -117,31 +117,10 @@ const IdeaForm = () => {
             required
           />
         </label>
-        <label>
-          Presenter Name:
-          <input
-            className="input"
-            type="text"
-            value={presenter}
-            onChange={(e) => setPresenter(e.target.value)}
-            placeholder="Your name"
-            required
-          />
-        </label>
-        <label>
-          Presenter Email:
-          <input
-            className="input"
-            type="email"
-            value={pemail}
-            onChange={(e) => setPemail(e.target.value)}
-            placeholder="Your email"
-            required
-          />
-        </label>
-        <div className="btn">
-          <button type="submit">Submit Idea</button>
-        </div>
+        <button type="submit" disabled={loading}>
+          {loading ? "Submitting..." : "Submit Idea"}
+        </button>
+        {error && <p className="error">{error}</p>}
       </form>
     </div>
   );

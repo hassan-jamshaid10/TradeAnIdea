@@ -30,7 +30,7 @@ function App() {
   return (
     <>
       <Router>
-        {/* <Header /> */}
+        <Header />
         <main>
           <Routes>
           <Route path="/forgot" element={<ForgotPassword />} />
@@ -52,7 +52,7 @@ function App() {
             <Route path="/option" element={<ProtectedRoute><Option /></ProtectedRoute>} />
           </Routes>
         </main>
-        {/* <Footer /> */}
+        <Footer />
       </Router>
     </>
   );

@@ -67,3 +67,20 @@
 .add-comment-btn:hover {
   background-image: linear-gradient(to right,rgb(229, 231, 206),rgb(206, 187, 249));
 }
+.success-popup {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 16px;
+  position: relative;
+  animation: fadeInOut 3s forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
