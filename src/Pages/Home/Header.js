@@ -4,26 +4,32 @@ import { Link } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../Features/authSlice"; // Import logout action from auth slice
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // Get authentication state from Redux store
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const isLoggedIn = !!localStorage.getItem("authToken"); // Mock login check
-  const HideHeaderOn = ["/login", "/signUp", "/forgot"];
+  const HideHeaderOn = ["/login", "/signUp", "/forgot"]; // Pages to hide header
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken"); // Mock logout
-    navigate("/");
+    dispatch(logout()); // Dispatch logout action to clear auth state
+    navigate("/login"); // Redirect to login page
   };
 
   if (HideHeaderOn.includes(location.pathname)) {
-    return null;
+    return null; // Hide header on specific routes
   }
 
   return (
@@ -50,13 +56,22 @@ const Header = () => {
             <li>
               <Link to="/services" onClick={toggleSidebar}>Services</Link>
             </li>
-            {isLoggedIn && (
+            {isAuthenticated ? (
               <>
                 <li>
                   <Link to="/profile" onClick={toggleSidebar}>User Profile</Link>
                 </li>
                 <li>
                   <button onClick={handleLogout} className="logout-btn">Logout</button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to="/login" onClick={toggleSidebar}>Login</Link>
+                </li>
+                <li>
+                  <Link to="/signUp" onClick={toggleSidebar}>Sign Up</Link>
                 </li>
               </>
             )}

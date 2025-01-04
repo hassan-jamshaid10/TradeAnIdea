@@ -1,44 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';  // Import useParams to extract URL parameters
 import { fetchIdeaDetails, addCommentToIdea } from '../../Features/IdeaDetailsSlice'; // Import actions
 import './Detail.css';
 
 const Detail = () => {
-  const { id } = useParams();
   const dispatch = useDispatch();
+  const { ideaId } = useParams();  // Extract the ideaId from the URL
   const { idea, comments, loading, error } = useSelector((state) => state.ideaDetails);
-  const [commentInput, setCommentInput] = useState('');
-  const [showPopup, setShowPopup] = useState(false); // State to manage popup visibility
+  const token = useSelector((state) => state.auth.token); // Get token from Redux store
+  const [commentInput, setCommentInput] = useState(''); // Comment input state
 
+  // Fetch idea details when the ideaId changes
   useEffect(() => {
-    dispatch(fetchIdeaDetails(id)); // Fetch idea details when the component mounts
-  }, [dispatch, id]);
+    if (ideaId) {
+      dispatch(fetchIdeaDetails()); // Dispatch action to fetch idea details by ID
+    }
+  }, [dispatch, ideaId]); // Dependency on ideaId ensures refetch when it changes
 
   const handleAddComment = () => {
     if (commentInput.trim()) {
-      dispatch(addCommentToIdea({ ideaId: id, commentText: commentInput }));
-      setCommentInput(''); // Clear the input after submitting
-      setShowPopup(true); // Show the popup when a comment is added
-
-      // Hide the popup after 3 seconds
-      setTimeout(() => {
-        setShowPopup(false);
-      }, 3000);
+      // Ensure token exists before dispatching the addComment action
+      if (token) {
+        dispatch(addCommentToIdea({ ideaId, commentText: commentInput }));
+        setCommentInput(''); // Clear the comment input after adding
+      } else {
+        console.error('No token found!');
+        alert('You must be logged in to comment');
+      }
+    } else {
+      alert('Please write a comment before submitting.');
     }
   };
 
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error.message || 'An error occurred while fetching idea details.'}</p>;
+  }
+
   return (
     <div className="detail-page">
-      {loading && <p>Loading...</p>}
-      {error && <p>{error.message}</p>}
-
-      {idea && (
+      {idea ? (
         <>
           <h1 className="idea-name">{idea.idea_name}</h1>
           <p className="idea-description">{idea.description}</p>
 
-          {/* Display Betterment, Category, and SDG */}
+          {/* Display Betterment and Category */}
           {idea.betterment && (
             <p>
               <strong>Betterment: </strong>{idea.betterment}
@@ -49,11 +59,6 @@ const Detail = () => {
               <strong>Category: </strong>{idea.category}
             </p>
           )}
-          {idea.sdg && (
-            <p>
-              <strong>SDG: </strong>{idea.sdg}
-            </p>
-          )}
 
           <h4>Presented by:</h4>
           <h5>{idea.userName}</h5>
@@ -61,7 +66,21 @@ const Detail = () => {
 
           <hr />
 
+          {/* Comment section */}
           <div className="comment-section">
+            <h2>Comments</h2>
+            <ul className="comment-list">
+              {comments?.length > 0 ? (
+                comments.map((comment) => (
+                  <li key={comment.commentId} className="comment-item">
+                    <p>{comment.text}</p>
+                    <span>{new Date(comment.createdAt).toLocaleString()}</span>
+                  </li>
+                ))
+              ) : (
+                <p>No comments yet.</p>
+              )}
+            </ul>
 
             {/* Add new comment */}
             <textarea
@@ -74,14 +93,9 @@ const Detail = () => {
               Add Comment
             </button>
           </div>
-
-          {/* Popup Notification */}
-          {showPopup && (
-            <div className="popup">
-              <p>New comment added successfully!</p>
-            </div>
-          )}
         </>
+      ) : (
+        <p>Idea not found.</p>
       )}
     </div>
   );

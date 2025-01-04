@@ -4,17 +4,26 @@ import axios from 'axios';
 // Fetch Idea Details by ID
 export const fetchIdeaDetails = createAsyncThunk(
   'ideaDetails/fetchIdeaDetails',
-  async (ideaId, { getState, rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
     try {
+      const { selectedIdeaId } = getState().ideas; // Get the selected ideaId from Redux store
+      console.log(selectedIdeaId);
+      if (!selectedIdeaId) {
+        throw new Error('Idea ID is not available');
+      }
+
       const token = getState().auth.token; // Get token from Redux state
-      const response = await axios.get(`http://localhost:5000/api/v1/ideas/${ideaId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Attach token to request header
-        },
-      });
+      const response = await axios.get(
+        `http://localhost:5000/api/v1/ideas/${selectedIdeaId}`, 
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach token to request header
+          },
+        }
+      );
       return response.data; // Returning the API response which includes the idea and comments
     } catch (error) {
-      return rejectWithValue(error.response.data); // Handling errors
+      return rejectWithValue(error.response?.data || { message: "Error fetching idea details" });
     }
   }
 );
@@ -24,7 +33,7 @@ export const addCommentToIdea = createAsyncThunk(
   'ideaDetails/addCommentToIdea',
   async ({ ideaId, commentText }, { getState, rejectWithValue }) => {
     try {
-      const token = getState().auth.token; // Get the token from Redux state
+      const token = getState().auth.token; // Get token from Redux state
       const response = await axios.post(
         `http://localhost:5000/api/v1/ideas/${ideaId}/comments`,
         { ideaId, comment: commentText },
@@ -36,7 +45,7 @@ export const addCommentToIdea = createAsyncThunk(
       );
       return response.data; // The API response containing the updated comments array
     } catch (error) {
-      return rejectWithValue(error.response.data); // Handling errors
+      return rejectWithValue(error.response?.data || { message: "Error adding comment" }); // Handling errors
     }
   }
 );

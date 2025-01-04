@@ -22,6 +22,7 @@ import './App.css';
 import ResetPassword from './Pages/Authentication/ResetPassword';
 import OTPPage from './Pages/Authentication/OTPPage';
 
+
 function App() {
   return (
     <>
@@ -39,9 +40,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
-            <Route path="/all" element={<All />} />
+            <Route path="/all" element={<ProtectedRoute><All /></ProtectedRoute>} />
 
             {/* Protected Routes */}
+            <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}></Route>
             <Route path="/form" element={<ProtectedRoute><IdeaForm /></ProtectedRoute>} />
             <Route path="/detail/:id" element={<ProtectedRoute><Detail /></ProtectedRoute>} />
             <Route path="/option" element={<ProtectedRoute><Option /></ProtectedRoute>} />

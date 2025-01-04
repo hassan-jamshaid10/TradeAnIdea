@@ -13,20 +13,18 @@ const All = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Get token and authentication status from Redux store
-  const { token, isAuthenticated } = useSelector((state) => state.auth); 
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const { ideas, loading, error } = useSelector((state) => state.ideas);
 
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     if (isAuthenticated) {
-      // Dispatch the action with the token
-      dispatch(fetchIdeas(token)); // Pass token to fetchIdeas action
+      dispatch(fetchIdeas()); // Fetch ideas without passing token
     } else {
       navigate("/login"); // Redirect to login if not authenticated
     }
-  }, [dispatch, isAuthenticated, navigate, token]);
+  }, [dispatch, isAuthenticated, navigate]);
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
@@ -41,10 +39,9 @@ const All = () => {
   );
 
   const handleDetailPage = (id) => {
-    navigate(`/detail/${id}`);
+    navigate(`/detail/${id}`);  // Navigate to the detail page with the idea id
   };
 
-  // Check for object error and render its message
   const renderError = error && typeof error === "object" && error.message ? error.message : error;
 
   return (
@@ -71,13 +68,12 @@ const All = () => {
             <p>Error: {renderError}</p>
           ) : filteredIdeas.length > 0 ? (
             filteredIdeas.map((idea) => (
-              <div key={idea.ideaId} className="idea-card">
+              <div key={idea.id} className="idea-card">
                 <h2 className="idea-name">{idea.ideaName}</h2>
                 <p className="idea-description">
                   {truncateDescription(idea.description, 100)}
                 </p>
 
-                {/* Display Betterment, Category, and SDG */}
                 {idea.betterment && (
                   <p>
                     <strong>Betterment: </strong>{idea.betterment}
@@ -101,7 +97,7 @@ const All = () => {
 
                 <button
                   className="read-more-btn"
-                  onClick={() => handleDetailPage(idea.ideaId)}
+                  onClick={() => handleDetailPage(idea.id)}  // Call handleDetailPage with the idea's id
                 >
                   Read More
                 </button>
@@ -110,7 +106,7 @@ const All = () => {
                   <div className="comments-section">
                     <h3>Comments:</h3>
                     {idea.comments.map((comment) => (
-                      <div key={comment.commentId} className="comment">
+                      <div key={comment.id} className="comment">
                         <p>{comment.text}</p>
                         <span>{new Date(comment.createdAt).toLocaleString()}</span>
                       </div>
