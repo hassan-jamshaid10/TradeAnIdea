@@ -49,12 +49,7 @@ const SignUpForm = () => {
       setErrorMessage("Please enter a valid Gmail address");
       return;
     }
-    if (!passwordRegex.test(password)) {
-      setErrorMessage(
-        "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character"
-      );
-      return;
-    }
+
     if (password !== confirmPassword) {
       setErrorMessage("Passwords do not match");
       return;
