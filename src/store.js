@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../src/Features/authSlice';
 import ideasReducer from '../src/Features/GetIdeasSlice';
-import ideaDetailsReducer from '../src/Features/IdeaDetailsSlice';
+import ideaDetailsReducer from './Features/IdeaDetailsSlice';
 import ideaFormReducer from '../src/Features/ideaFormSlice';
 import profileReducer from '../src/Features/profileSlice';
 
