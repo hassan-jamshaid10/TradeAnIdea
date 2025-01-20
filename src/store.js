@@ -4,7 +4,7 @@ import ideasReducer from '../src/Features/GetIdeasSlice';
 import ideaDetailsReducer from './Features/IdeaDetailsSlice';
 import ideaFormReducer from '../src/Features/ideaFormSlice';
 import profileReducer from '../src/Features/profileSlice';
-
+import llmReducer from '../src/Features/LLMSlice';
 const store = configureStore({
     reducer: {
         ideas: ideasReducer,
@@ -12,6 +12,7 @@ const store = configureStore({
         ideaDetails: ideaDetailsReducer,
         ideaForm: ideaFormReducer,
         profile: profileReducer,
+        llm: llmReducer,
     },
 });
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { submitIdea, resetFormState } from "../../Features/ideaFormSlice";
+import { fetchFeasibility } from "../../Features/LLMSlice"; // Import the new slice
 import "./IdeaForm.css";
 
 const sdgList = [
@@ -32,8 +33,10 @@ const IdeaForm = () => {
 
   const dispatch = useDispatch();
   const { loading, success, error } = useSelector((state) => state.ideaForm);
+  const { result, status, error: llmError } = useSelector((state) => state.llm); // Access feasibility result
   const token = useSelector((state) => state.auth.token); // Fetch the token from the auth slice
 
+  // Handle form reset upon successful submission
   useEffect(() => {
     if (success) {
       alert("Idea submitted successfully!");
@@ -46,6 +49,15 @@ const IdeaForm = () => {
     }
   }, [success, dispatch]);
 
+  // Handle feasibility check before form submission
+  useEffect(() => {
+    if (idea && description) {
+      const instruction =
+        "You are a judge of project ideas and have to check if the idea is feasible in terms of previous occurrences. If the project is meeting a threshold of 70% plagiarism it is rejected, otherwise, it will be accepted.";
+      dispatch(fetchFeasibility({ instruction, project_description: description }));
+    }
+  }, [idea, description, dispatch]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -54,9 +66,15 @@ const IdeaForm = () => {
       return;
     }
 
+    // Check if feasibility result is "Original"
+    if (result !== "Original") {
+      alert("Idea is rejected due to plagiarism threshold.");
+      return;
+    }
+
     const ideaData = { idea_name: idea, description, betterment, category, sdg };
 
-    // Pass token with the action
+    // Pass token with the action to submit the idea
     dispatch(submitIdea({ ideaData, token }));
   };
 
@@ -117,11 +135,13 @@ const IdeaForm = () => {
             required
           />
         </label>
-        <button type="submit" disabled={loading}>
-          {loading ? "Submitting..." : "Submit Idea"}
+        <button type="submit" disabled={loading || status === "loading"}>
+          {loading || status === "loading" ? "Submitting..." : "Submit Idea"}
         </button>
         {error && <p className="error">{error}</p>}
+        {llmError && <p className="error">{llmError}</p>} {/* Display LLM errors */}
       </form>
+      {status === "loading" && <p>Checking feasibility...</p>}
     </div>
   );
 };
