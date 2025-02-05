@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_ENDPOINT = "https://0913-35-231-254-109.ngrok-free.app/predict";
+const API_ENDPOINT = " https://0b07-34-125-2-109.ngrok-free.app/predict";
 
 // Async thunk for API call
 export const fetchFeasibility = createAsyncThunk(

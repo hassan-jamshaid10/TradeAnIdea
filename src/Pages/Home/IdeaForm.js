@@ -49,7 +49,7 @@ const IdeaForm = () => {
     }
   }, [success, dispatch]);
 
-  // Handle feasibility check before form submission
+  
   useEffect(() => {
     if (idea && description) {
       const instruction =
